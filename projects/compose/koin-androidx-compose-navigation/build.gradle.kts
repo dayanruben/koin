@@ -14,9 +14,6 @@ val androidMinSDK: String by project
 android {
     namespace = "org.koin.androidx.compose.navigation"
     compileSdk = androidCompileSDK.toInt()
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
     defaultConfig {
         minSdk = androidMinSDK.toInt()
     }
@@ -30,6 +27,12 @@ android {
     }
     publishing {
         singleVariant("release") {}
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_1_8)
     }
 }
 
