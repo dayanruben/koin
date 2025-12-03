@@ -7,12 +7,13 @@ plugins {
 
 val jvmTarget = "17"
 
-tasks.getByName<JavaCompile>("compileJava") {
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = jvmTarget
     targetCompatibility = jvmTarget
 }
 
-tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
-    kotlinOptions.jvmTarget = jvmTarget
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
 }
 
 val jmhVersion = "1.36"
