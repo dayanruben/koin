@@ -1,18 +1,19 @@
 ![logo](./docs/img/koin_main_logo.png)
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.3.20-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 ![Github Actions](https://github.com/InsertKoinIO/koin/actions/workflows/build.yml/badge.svg)
 [![Apache 2 License](https://img.shields.io/github/license/InsertKoinIO/koin)](https://github.com/InsertKoinIO/koin/blob/main/LICENSE.txt)
 [![Slack channel](https://img.shields.io/badge/Chat-Slack-orange.svg?style=flat&logo=slack)](https://kotlinlang.slack.com/messages/koin/)
-
-[![Free Monitoring](https://img.shields.io/badge/Kotzilla.io-Free%20Monitoring-brightgreen?style=flat&logo=kotlin&logoColor=white)]([https://forms.gle/YOUR-FORM-ID](https://bit.ly/koin_opensource_monitoring))
 
 
 # What is KOIN? ✨
  
 Koin is a pragmatic, lightweight dependency injection framework for Kotlin developers, developed by [Kotzilla](https://kotzilla.io) and open-source [contributors](https://github.com/InsertKoinIO/koin/graphs/contributors).
 
-`Koin is a DSL, a light container and a pragmatic API`
+```
+The pragmatic Kotlin & Kotlin Multiplatform Dependency Injection framework
+- Simple and Powerful -
+```
 
 
 ## Setup & Current Version 📦
@@ -20,7 +21,7 @@ Koin is a pragmatic, lightweight dependency injection framework for Kotlin devel
 Follow the dedicated [setup page](https://insert-koin.io/docs/setup/koin) to setup Koin for your project.
 Here are the currently available Koin versions:
 
-- **Stable** Version : [![Maven Central](https://img.shields.io/maven-central/v/io.insert-koin/koin-core/4.1.1)](https://mvnrepository.com/artifact/io.insert-koin/koin-core/4.1.1)
+- **Stable** Version : [![Maven Central](https://img.shields.io/maven-central/v/io.insert-koin/koin-core/4.2.0)](https://mvnrepository.com/artifact/io.insert-koin/koin-core/4.2.0)
 - **Unstable** Version : [![Maven Central](https://img.shields.io/maven-central/v/io.insert-koin/koin-core)](https://mvnrepository.com/artifact/io.insert-koin/koin-core)
 
 Take a look at:
@@ -35,36 +36,21 @@ Take a look at:
 - Found a bug or a problem? Open an issue on [Github issues](https://github.com/InsertKoinIO/koin/issues)
 - Opt into [Koin 3.5 LTS](https://kotzilla.io/koin-lts) SLA-backed updates, long-term maintenance, and direct access to Kotzilla experts
 
-## Debugging & Performance Monitoring 🛠️
+## Mobile Developer Observability Tools 🛠️
 
 - **Koin Plugin** can be freely downloaded on [Jetbrains Marketplace](https://plugins.jetbrains.com/plugin/26131-koin-dependency-injection-official-/versions/stable)
 > The pragmatic Kotlin and Kotlin Multiplatform Dependency Injection framework now with native support for IntelliJ IDEA and Android Studio.
 
 - **Kotzilla Platform** Free signup on [Kotzilla](https://kotzilla.io)
-> is a console-based suite with connected cloud services that visualizes your Koin module structure, monitors runtime performance and memory metrics, provides advanced debugging and tracing, and seamlessly integrates with Kotlin Multiplatform projects. 
-
-### 🚀 Free Monitoring for Koin Apps
-
-Kotzilla.io — the team behind [Koin](https://insert-koin.io) — offers **free monitoring** for any open source Android or KMP app using Koin and published on the Google Play Store.
-
-👉 [Apply for Free Monitoring](https://bit.ly/koin_opensource_monitoring)
+> is a console-based suite with connected cloud services that visualizes your Koin module structure, monitors runtime performance and memory metrics, provides advanced debugging and tracing, and seamlessly integrates with Kotlin Multiplatform projects.
+> 
 
 ## Latest News & Resources 🌐
 - Official Website: [insert-koin.io](https://insert-koin.io)
 - Twitter: [@insertkoin_io](https://twitter.com/insertkoin_io)
 - Blog: [Koin Developers](https://blog.insert-koin.io)
 - Newsletter: [Koin Newsletter](https://bit.ly/koin_newsletter)
-
-## Koin Tutorials 🚀
-
-You can find here tutorials to help you learn and get started with the Koin framework:
-- [Kotlin](https://insert-koin.io/docs/quickstart/kotlin)
-- [Kotlin with Koin Annotations](https://insert-koin.io/docs/quickstart/kotlin-annotations)
-- [Android](https://insert-koin.io/docs/quickstart/android-viewmodel)
-- [Android with Koin Annotations](https://insert-koin.io/docs/quickstart/android-annotations)
-- [Android Jetpack Compose](https://insert-koin.io/docs/quickstart/android-compose)
-- [Kotlin Multiplatform](https://insert-koin.io/docs/quickstart/kmp)
-- [Ktor](https://insert-koin.io/docs/quickstart/ktor)
+- Tutorials: [Koin Tutorials](https://insert-koin.io/docs/quickstart/kotlin)
 
 ## Contributing 🛠
 
