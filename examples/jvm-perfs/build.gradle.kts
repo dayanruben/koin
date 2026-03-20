@@ -1,29 +1,33 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 repositories.mavenCentral()
+
+apply(from = "../gradle/versions.gradle")
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
     kotlin("kapt")
 }
 
-val jvmTarget = "17"
-
-tasks.withType<JavaCompile>().configureEach {
-    sourceCompatibility = jvmTarget
-    targetCompatibility = jvmTarget
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 val jmhVersion = "1.36"
-//TODO get from existing version.gradle file
-val koin_version = "4.0.0"
+val koinVersion = extra["koin_version"] as String
 
 dependencies {
-    api("io.insert-koin:koin-core:$koin_version")
-    api("io.insert-koin:koin-core-coroutines:$koin_version")
-    api("io.insert-koin:koin-fu:$koin_version")
+    api("io.insert-koin:koin-core:$koinVersion")
+    api("io.insert-koin:koin-core-coroutines:$koinVersion")
     implementation("org.openjdk.jmh:jmh-core:$jmhVersion")
     kapt("org.openjdk.jmh:jmh-generator-annprocess:$jmhVersion")
 }

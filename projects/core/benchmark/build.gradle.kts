@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    kotlin("plugin.allopen") version "2.3.20-RC3"
+    kotlin("plugin.allopen") version "2.3.20"
     alias(libs.plugins.benchmark)
 }
 
@@ -18,6 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.benchmark.runtime)
             api(project(":core:koin-core"))
+            api(project(":core:koin-core-coroutines"))
         }
         jvmMain.dependencies {
 

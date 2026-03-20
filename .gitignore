@@ -10,5 +10,6 @@ classes/
 /captures
 yarn.lock
 .kotlin/
+**/*/.claude/settings.local.json
 
 .junie
