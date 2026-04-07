@@ -15,6 +15,10 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.withType<Test>().configureEach {
+    jvmArgs("-Dnet.bytebuddy.experimental=true")
+}
+
 tasks.withType<KotlinCompile>().all {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_1_8)

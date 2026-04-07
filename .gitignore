@@ -11,3 +11,5 @@ classes/
 yarn.lock
 .kotlin/
 **/*/.claude/settings.local.json
+
+.junie

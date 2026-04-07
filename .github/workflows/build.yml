@@ -39,6 +39,7 @@ jobs:
         run: cd projects && ./install.sh
 
   build-macos:
+    if: ${{ github.ref != 'refs/heads/eap/kotlin' && github.head_ref != 'eap/kotlin' }}
     runs-on: macos-latest
     timeout-minutes: 30
 
