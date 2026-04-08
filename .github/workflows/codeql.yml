@@ -11,6 +11,7 @@ on:
 
 jobs:
   analyze:
+    if: github.repository == 'InsertKoinIO/koin'
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
