@@ -40,7 +40,7 @@ class CoreResolverV2(
     }
 
     override fun <T> resolveFromContext(scope : Scope, instanceContext: ResolutionContext): T {
-        return resolveFromContextOrNull(scope,instanceContext) ?: throwNoDefinitionFound(instanceContext)
+        return resolveFromContextOrNull(scope,instanceContext) ?: throwNoDefinitionFound(scope, instanceContext)
     }
 
     private fun <T> resolveFromContextOrNull(scope : Scope, instanceContext: ResolutionContext): T? {
@@ -79,38 +79,41 @@ class CoreResolverV2(
     }
 
     private fun <T> resolveFromLinkedScopes(scope: Scope, ctx: ResolutionContext): T? {
-        val scopes = listOf(scope) + flatten(scope.linkedScopes)
-        var resolvedScope: Scope? = null
+        val linkedScopes = flatten(scope.linkedScopes)
+        if (linkedScopes.isEmpty()) return null
 
-        val factory = scopes.firstNotNullOfOrNull { linkedScope ->
-            val definition = findDefinitionInScope(linkedScope, ctx)
-            if (definition != null) {
-                resolvedScope = linkedScope
+        for (linkedScope in linkedScopes) {
+            // 1. Registry on this linked scope
+            val factory = findDefinitionInScope(linkedScope, ctx)
+            if (factory != null) {
+                // we will loose parameters from parent context
+                val newCtx = ctx.newContextForScope(linkedScope)
+                if (linkedScope.scopeArchetype != null && !linkedScope.isRoot) {
+                    newCtx.scopeArchetype = linkedScope.scopeArchetype
+                }
+
+                // stack params for call on other Scope
+                val paramStack = if (newCtx.parameters != null) {
+                    newCtx.scope.onParameterOnStack(newCtx.parameters)
+                } else null
+
+                // call with scope
+                val value = factory.get(newCtx) as T?
+
+                // unstack params - reuse stack reference, avoid second ThreadLocal access
+                paramStack?.let { newCtx.scope.clearParameterStack(it) }
+
+                return value
             }
-            definition
+
+            // 2. Stacked params on this linked scope (issue #2387):
+            // restores access to parameters stacked on parent scopes (e.g.
+            // AndroidParametersHolder stacked on root by KoinViewModelFactory,
+            // resolved from a child ViewModel scope's property initializer).
+            val fromStack = resolveFromStackedParameters<T>(linkedScope, ctx)
+            if (fromStack != null) return fromStack
         }
-
-        val foundScope = resolvedScope ?: return null
-        if (factory == null) return null
-
-        // we will loose parameters from parent context
-        val newCtx = ctx.newContextForScope(foundScope)
-        if (foundScope.scopeArchetype != null && !foundScope.isRoot) {
-            newCtx.scopeArchetype = foundScope.scopeArchetype
-        }
-
-        // stack params for call on other Scope
-        val paramStack = if (newCtx.parameters != null) {
-            newCtx.scope.onParameterOnStack(newCtx.parameters)
-        } else null
-
-        // call with scope
-        val value = factory.get(newCtx) as T?
-
-        // unstack params - reuse stack reference, avoid second ThreadLocal access
-        paramStack?.let { newCtx.scope.clearParameterStack(it) }
-
-        return value
+        return null
     }
 
     private fun findDefinitionInScope(scope: Scope, ctx: ResolutionContext): InstanceFactory<*>? {
@@ -138,10 +141,19 @@ class CoreResolverV2(
         }
     }
 
-    private inline fun <T> throwNoDefinitionFound(ctx: ResolutionContext): T {
+    private inline fun <T> throwNoDefinitionFound(scope: Scope, ctx: ResolutionContext): T {
         val qualifierString = ctx.qualifier?.let { " and qualifier '$it'" } ?: ""
+        val scopeInfo = if (ctx.scope != scope) {
+            "scope '${scope}' (resolution context scope: '${ctx.scope}')"
+        } else {
+            "scope '${scope}'"
+        }
+        val linkedScopeIds = scope.getLinkedScopeIds()
+        val searchedScopes = if (linkedScopeIds.isNotEmpty()) {
+            " Searched scopes: ['${scope.id}'] -> ${linkedScopeIds.map { "['$it']" }}"
+        } else ""
         throw NoDefinitionFoundException(
-            "No definition found for type '${ctx.clazz.getFullName()}'$qualifierString on scope '${ctx.scope}'. Check your Modules configuration and add missing type and/or qualifier!",
+            "No definition found for type '${ctx.clazz.getFullName()}'$qualifierString on $scopeInfo.$searchedScopes. Check or add definition for type '${ctx.clazz.getFullName()}'$qualifierString in scope '${scope.scopeQualifier}'.",
         )
     }
 
