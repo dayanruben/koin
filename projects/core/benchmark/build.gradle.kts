@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    kotlin("plugin.allopen") version "2.3.21-RC"
+    kotlin("plugin.allopen") version "2.3.21-RC2"
     alias(libs.plugins.benchmark)
 }
 
