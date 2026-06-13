@@ -47,6 +47,9 @@ kotlin {
     iosSimulatorArm64()
     macosX64()
     macosArm64()
+    tvosArm64()
+    tvosSimulatorArm64()
+    tvosX64()
 
     sourceSets {
         commonMain.dependencies {
@@ -69,6 +72,7 @@ android {
     compileSdk = androidCompileSDK.toInt()
     defaultConfig {
         minSdk = androidMinSDK.toInt()
+        consumerProguardFiles("consumer-rules.pro")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
